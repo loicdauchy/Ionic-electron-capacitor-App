@@ -1,0 +1,7 @@
+{
+  "name": "happycash",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

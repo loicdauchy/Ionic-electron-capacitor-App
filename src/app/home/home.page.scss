@@ -1,0 +1,181 @@
+#container {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexColumn {
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#optionsChart {
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 75px;
+}
+
+#bar-chart-container0 {
+  height: 400px;
+  width: 800px;
+}
+
+#bar-chart-container1 {
+  height: 400px;
+  width: 800px;
+  overflow-y: scroll;
+}
+
+#bar-chart-container2 {
+  height: 400px;
+  width: 800px;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.mainAdmin {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btnNextPrevWeekDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editFicheClientButton {
+  cursor: pointer;
+  font-size: 1.7rem !important;
+}
+
+.ficheClientListTitle {
+  font-weight: 600 !important;
+}
+
+.end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.rowHeaderFicheClient {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.alignCenter {
+  text-align: center !important;
+}
+
+#detailficheClient {
+  width: 0px;
+  height: 0px;
+  position: relative;
+  background: rgb(63, 147, 168);
+  transition: 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.detailFicheClientOpen {
+  width: 800px !important;
+  height: 400px !important;
+  transition: 0.2s ease-in-out;
+}
+
+.closeModalButton {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.identityCard {
+  width: 200px;
+  height: 100px;
+}
+
+.contentDetail {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.identityCardPart {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.informationContentDetail {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.btnPictureDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center{
+  justify-content: center !important;
+}
+.pictureDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.enterNameDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+}
+.finishBtn{
+  margin-top: 50px;
+}
+.btnResponse{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alert-danger{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}

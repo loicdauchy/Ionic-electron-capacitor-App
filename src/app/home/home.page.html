@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="end" mode="md" *ngIf="!isNativePlatform">
+      Graphique
+    </ion-title>
+    <ion-title slot="end" mode="md" *ngIf="isNativePlatform">
+      Bienvenue
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="!isNativePlatform">
+
+  <div class="mainAdmin">
+
+    <div id="optionsChart">
+
+      <div class="btnNextPrevWeekDiv">
+        <ion-button color="secondary" (click)="weekBack()">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="secondary" (click)="weekForward()">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <ion-text color="dark">
+        <h2>Semaine {{ numberOfWeek }}</h2>
+      </ion-text>
+
+      <div class="btnNextPrevWeekDiv">
+        <ion-button fill="outline" color="dark" (click)="changeViewTo1()">Liste</ion-button>
+        <ion-button fill="outline" color="secondary" (click)="changeViewTo0()">Vente</ion-button>
+        <ion-button fill="outline" color="success" (click)="changeViewTo2()">Client</ion-button>
+      </div>
+
+    </div>
+
+    <div id="container">
+
+      <div id="bar-chart-container1" *ngIf="chartView === 1">
+        <ion-list *ngIf="!openDetail">
+          <ion-grid>
+            <ion-row class="rowHeaderFicheClient">
+              <ion-col size="4" class="start">
+                <ion-label class="ficheClientListTitle" color="secondary">Nom complet</ion-label>
+              </ion-col>
+              <ion-col size="4">
+                <ion-label class="ficheClientListTitle" color="secondary">Date</ion-label>
+              </ion-col>
+              <ion-col size="4" class="end">
+                <ion-label class="ficheClientListTitle" color="secondary">Éditer</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div *ngFor="let f of fichesClients">
+            <ion-item *ngIf="numberOfWeek === formatFireBaseDateToWeekNumber(f.start)">
+              <ion-label slot="start">{{ f.fullName }}</ion-label>
+              <ion-label slot="start" class="alignCenter">{{ formatFireBaseDateToShow(f.start) }}</ion-label>
+              <ion-icon name="create" slot="end" color="secondary" class="editFicheClientButton"
+                (click)="openDetailModal(f.id)"></ion-icon>
+            </ion-item>
+          </div>
+        </ion-list>
+        <div id="detailficheClient" [class.detailFicheClientOpen]="openDetail">
+          <ion-toolbar>
+            <ion-icon name="arrow-back" color="secondary" (click)="closeDetail()" slot="start" size="large"
+              class="closeModalButton"></ion-icon>
+            <ion-title slot="end">{{ ficheClient.fullName }}</ion-title>
+          </ion-toolbar>
+          <div class="contentDetail">
+            <div class="identityCardPart">
+
+              <ion-button color="dark" (click)="forceDownload(ficheClient.identityCard, ficheClient.fullName+'_ID_RECTO.jpg')">
+                Carte d'identité Recto
+                <ion-icon name="download" slot="end" class="downloadImg"></ion-icon>
+              </ion-button>
+
+              <ion-button color="dark" (click)="forceDownload(ficheClient.identityCard2, ficheClient.fullName+'_ID_VERSO.jpg')">
+                Carte d'identité Verso
+                <ion-icon name="download" slot="end" class="downloadImg"></ion-icon>
+              </ion-button>
+             
+            </div>
+            <div class="informationContentDetail">
+              <ion-item>
+                <ion-label>Vente conclue ?</ion-label>
+                <ion-toggle color="success" [(ngModel)]="ficheClient.conclude" (ngModelChange)="updateFicheClient()"></ion-toggle>
+              </ion-item>    
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="bar-chart-container0" *ngIf="chartView === 0">
+        <canvas #barCanvas style="position: relative;"></canvas>
+      </div>
+
+      <div id="bar-chart-container2" *ngIf="chartView === 2">
+        <canvas #lineCanvas style="position: relative;"></canvas>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="isNativePlatform">
+  <div class="main">
+    <h2 class="alignCenter">Happy Cash</h2>
+
+    <div class="flexColumn center" *ngIf="customersViews === 0">
+
+      <p class="alert-success" *ngIf="customersViewsError === 0" >Êtes-vous majeur ?</p>
+
+      <div class="btnResponse" *ngIf="customersViewsError === 0" >
+        <ion-button color="success" (click)="customerViewGoToOne()">Oui</ion-button>
+        <ion-button color="danger" (click)="notMajor()">Non</ion-button>
+      </div>
+
+      <p *ngIf="customersViewsError === 1" class="alert-danger">Désolé, mais vous devez être majeur pour effectuer une vente.</p>
+
+    </div>
+
+    <div class="flexColumn" *ngIf="customersViews === 1">
+
+      <div class="enterNameDiv">
+        <ion-label>Entrez votre nom/prénom</ion-label>
+        <ion-item>
+          <ion-input [(ngModel)]="fullName"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="pictureDiv">
+
+        <ion-label>Prenez en photo votre carte d'identité</ion-label>
+        <div class="btnPictureDiv">
+
+          <ion-button (click)="takePicture()" color="light">
+            <ion-label>Recto</ion-label>
+            <ion-icon name="camera" color="warning" slot="end" *ngIf="!base64Image"></ion-icon>
+            <ion-icon name="camera" color="success" slot="end" *ngIf="base64Image"></ion-icon>  
+          </ion-button>
+
+          <ion-button (click)="takePicture2()" color="light">
+            <ion-label>Verso</ion-label>
+            <ion-icon name="camera" color="warning" slot="end" *ngIf="!base64Image2"></ion-icon>
+            <ion-icon name="camera" color="success" slot="end" *ngIf="base64Image2"></ion-icon>   
+          </ion-button>
+        </div>
+
+      </div>
+
+      <ion-button color="success" (click)="upload()" *ngIf="fullName && base64Image && base64Image2" class="finishBtn">Continuer</ion-button>
+
+    </div>
+
+  </div>
+</ion-content>
